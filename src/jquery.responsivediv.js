@@ -10,18 +10,20 @@
             600 : 'moderate',
             450 : 'narrow',
             300 : 'tiny'
-        }
+        },
+        delay: 500
     };
 
-    // The actual plugin constructor
-    function Plugin ( element, options ) {
-        this.div = element;
-        this.$div = $(element);
-        this.options = $.extend( {}, defaults, options );
-        this._defaults = defaults;
-        this._name = pluginName;
-        this.classes = [];
-        this._origClasses = this.div.className;
+    function Plugin(element, options) {
+        this.div            = element;
+        this.$div           = $(element);
+        this.options        = $.extend({}, defaults, options);
+        this.lastExecuted  = false;
+        this.classes        = [];
+        this._defaults      = defaults;
+        this._name          = pluginName;
+        this._width         = this.$div.width();
+        this._origClasses   = element.className;
         this.init();
     }
 
@@ -36,6 +38,14 @@
         },
 
         onResize: function() {
+
+            // trigger only on width changes
+            if(divWidth === this._width) return false;
+
+            // check if delay is ok
+            var timestamp = new Date().getTime();
+            if((timestamp - this.lastExecuted) < this.options.delay) return false;
+
             var divWidth = this.$div.width();
             var _cN = this.options.className;
             var classes = [];
@@ -60,6 +70,11 @@
 
             // trigger event to enable custom functionality
             $(this.$div).trigger('responsiveDivResize', [classes, divWidth]);
+
+            this._width = divWidth;
+            this.lastExecuted = timestamp;
+
+            return true;
         }
     };
 
