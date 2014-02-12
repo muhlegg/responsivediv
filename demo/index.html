@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Responsive div</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+		<script src="../src/jquery.responsivediv.js"></script>
+
+        <style>
+            body {
+                background: #f5f5f5;
+                margin: 0;
+                padding: 20px;
+                font-family: Veradana, sans-serif;
+                font-size: 18px;
+            }
+            #intro {
+
+            }
+            #demo-wrapper {
+                float: left;
+                width: 85%;
+                margin: 20px 0;
+                border: 20px solid #c6c6c6;
+            }
+            #sidebar {
+                width: 20%;
+                float: left;
+                padding: 20px 5%;
+            }
+            #content {
+                width: 60%;
+                padding: 20px 5%;
+                float: left;
+                background: #e8e8e8;
+            }
+            .responsive-div {
+                background: #ceeeff;
+                padding: 30px;
+                font-size: 15px;
+            }
+            header, footer {
+                width: 90%;
+                padding: 40px 5%;
+                float: left;
+                background: #efefef;
+            }
+
+            /* simulate basic responsive design ;) */
+            @media only screen and (max-width: 600px) {
+                #sidebar { width: 90%; }
+                #content { width: 90%; }
+            }
+        </style>
+	</head>
+	<body>
+
+        <div id="intro">
+            <h1>Responsive div - demo</h1>
+            The divs are "responsive" based on parent content, not on screen-width.
+        </div>
+
+        <div id="demo-wrapper">
+
+            <header>
+                header
+            </header>
+
+            <div id="sidebar">
+                sidebar<br>
+                ...<br>
+                ...<br>
+                ...<br>
+                ...<br>
+                ...<br>
+                ...<br>
+                ...<br>
+            </div>
+
+            <div id="content">
+                content
+                <br/><br/>
+                <div id="responsive-div1" class="responsive-div">
+                    Current responsive classes:<br> <span id="respoclasses1">-</span>
+                </div>
+                <br/>
+                <div id="responsive-div2" class="responsive-div">
+                    Current responsive classes:<br> <span id="respoclasses2">-</span>
+                </div>
+            </div>
+
+            <footer>
+                footer
+            </footer>
+
+        </div>
+
+        <div style="width: 100%; clear: both;"></div>
+
+		<script>
+			$(function() {
+
+                // example usage
+                $("#responsive-div1")
+                    // attach custom functionality to 'responsiveDivResize' event
+                    .on('responsiveDivResize', function(e, breakpointClasses, width) {
+                        $('#respoclasses1').html(breakpointClasses.join('<br>'));
+                    })
+
+                    // init plugin
+                    .responsiveDiv();
+
+                // another example with some custom options
+                $("#responsive-div2")
+                        .on('responsiveDivResize', function(e, breakpointClasses, width) {
+                            $('#respoclasses2').html(breakpointClasses.join('<br>'));
+                        })
+                        .responsiveDiv({
+                            className: 'customClass',
+                            breakpoints: {
+                                1000: 'A',
+                                500: 'B'
+                            }
+                        });
+			});
+		</script>
+	</body>
+</html>
