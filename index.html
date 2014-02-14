@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Responsive DIV by Muhlegg</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Responsive DIV</h1>
+        <h2>Javascript helper to enable media-query styling approach for elements unaware of their dom environment. </h2>
+        <a href="https://github.com/Muhlegg/responsivediv" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="responsive-div" class="anchor" href="#responsive-div"><span class="octicon octicon-link"></span></a>Responsive DIV</h1>
+
+<p>Javascript helper to enable media-query styling approach for elements unaware of their DOM environment. </p>
+
+<h2>
+<a name="why" class="anchor" href="#why"><span class="octicon octicon-link"></span></a>Why?</h2>
+
+<p>Developed to use with CORS where the response content should be able to react based on it's environment, not screen size. If you for example include a widget on a site using CORS, the widget should be styled based on how the target site handles responsive design and breakpoints. </p>
+
+<h2>
+<a name="how" class="anchor" href="#how"><span class="octicon octicon-link"></span></a>How?</h2>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;body&gt;</span>
+
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"widget"</span><span class="nt">&gt;&lt;/div&gt;</span>
+
+  <span class="c">&lt;!-- include jQuery here... --&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/assets/lib/jquery.responsivediv.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">'#widget'</span><span class="p">).</span><span class="nx">responsiveDiv</span><span class="p">();</span>  
+  <span class="nt">&lt;/script&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+</pre></div>
+
+<h3>
+<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h3>
+
+<p>The plugin accepts following parameters</p>
+
+<ul>
+<li>className: Base className to use for the generated classes.</li>
+<li>breakpoints: Object with breakpoints.</li>
+<li>delay: time to wait between resize events in milliseconds</li>
+</ul><div class="highlight highlight-javascript"><pre><span class="c1">// Default options</span>
+<span class="p">{</span> 
+    <span class="nx">className</span>  <span class="o">:</span> <span class="s1">'rdiv'</span><span class="p">,</span>
+    <span class="nx">breakpoints</span><span class="o">:</span> <span class="p">{</span>
+        <span class="mi">1000</span><span class="o">:</span> <span class="s1">'huge'</span><span class="p">,</span>
+        <span class="mi">800</span> <span class="o">:</span> <span class="s1">'wide'</span><span class="p">,</span>
+        <span class="mi">600</span> <span class="o">:</span> <span class="s1">'moderate'</span><span class="p">,</span>
+        <span class="mi">450</span> <span class="o">:</span> <span class="s1">'narrow'</span><span class="p">,</span>
+        <span class="mi">300</span> <span class="o">:</span> <span class="s1">'tiny'</span>
+    <span class="p">},</span>
+    <span class="nx">delay</span><span class="o">:</span> <span class="mi">500</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="events" class="anchor" href="#events"><span class="octicon octicon-link"></span></a>Events</h3>
+
+<p><strong>responsiveDivResize(e, breakpointClasses, width):</strong> Fired on each element width change.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">$</span><span class="p">(</span><span class="s2">"#widget"</span><span class="p">)</span>
+
+    <span class="c1">// attach custom functionality</span>
+    <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'responsiveDivResize'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">breakpointClasses</span><span class="p">,</span> <span class="nx">width</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Current classes: '</span><span class="o">+</span><span class="nx">breakpointClasses</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">', '</span><span class="p">));</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Current widget width: '</span><span class="o">+</span><span class="nx">width</span><span class="p">);</span>
+    <span class="p">})</span>
+
+    <span class="c1">// init plugin</span>
+    <span class="p">.</span><span class="nx">responsiveDiv</span><span class="p">();</span>
+</pre></div>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/Muhlegg/responsivediv/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/Muhlegg/responsivediv/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/Muhlegg/responsivediv"></a> is maintained by <a href="https://github.com/Muhlegg">Muhlegg</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
